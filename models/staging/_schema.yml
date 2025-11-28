@@ -1,4 +1,4 @@
-version: 2version: 2version: 2
+version: 2version: 2version: 2version: 2
 
 
 
@@ -6,55 +6,112 @@ models:
 
   - name: stg_department
 
-    description: Staging table for Walmart department datamodels:models:
+    description: Staging table for Walmart department datamodels:
 
     columns:
 
-      - name: STORE  - name: stg_department  - name: stg_department
+      - name: STORE  - name: stg_department
 
         description: Store identifier
 
-        tests:    description: Staging table for Walmart department data    description: Staging table for Walmart department data
+        tests:    description: Staging table for Walmart department datamodels:models:
 
           - not_null
 
-      - name: DEPT    columns:    columns:
+      - name: DEPT    columns:
 
         description: Department identifier
 
-        tests:      - name: store      - name: store
+        tests:      - name: STORE  - name: stg_department  - name: stg_department
 
           - not_null
 
-      - name: DEPT_NAME        description: Store identifier        description: Store identifier
+      - name: DEPT_NAME        description: Store identifier
 
         description: Department name
 
-        tests:        tests:
+        tests:    description: Staging table for Walmart department data    description: Staging table for Walmart department data
 
   - name: stg_stores
 
-    description: Staging table for Walmart store characteristics          - not_null          - not_null
+    description: Staging table for Walmart store characteristics          - not_null
 
     columns:
 
-      - name: STORE      - name: dept      - name: dept
+      - name: STORE      - name: DEPT    columns:    columns:
 
         description: Store identifier
 
-        tests:        description: Department identifier        description: Department identifier
+        tests:        description: Department identifier
 
           - not_null
 
-          - unique        tests:        tests:
+          - unique        tests:      - name: store      - name: store
 
       - name: STORE_TYPE
 
-        description: Store type (A, B, C)          - not_null          - not_null
+        description: Store type (A, B, C)          - not_null
 
       - name: STORE_SIZE
 
-        description: Store size in square feet      - name: dept_name      - name: dept_name
+        description: Store size in square feet      - name: DEPT_NAME        description: Store identifier        description: Store identifier
+
+
+
+  - name: stg_fact        description: Department name
+
+    description: Staging table for Walmart weekly sales facts
+
+    columns:        tests:        tests:
+
+      - name: STORE
+
+        description: Store identifier  - name: stg_stores
+
+        tests:
+
+          - not_null    description: Staging table for Walmart store characteristics          - not_null          - not_null
+
+      - name: DEPT
+
+        description: Department identifier    columns:
+
+        tests:
+
+          - not_null      - name: STORE      - name: dept      - name: dept
+
+      - name: STORE_DATE
+
+        description: Week end date        description: Store identifier
+
+        tests:
+
+          - not_null        tests:        description: Department identifier        description: Department identifier
+
+      - name: WEEKLY_SALES
+
+        description: Weekly sales amount          - not_null
+
+      - name: ISHOLIDAY
+
+        description: Holiday flag          - unique        tests:        tests:
+
+      - name: TEMPERATURE
+
+        description: Average temperature      - name: STORE_TYPE
+
+      - name: FUEL_PRICE
+
+        description: Fuel price in the region        description: Store type (A, B, C)          - not_null          - not_null
+
+      - name: CPI
+
+        description: Consumer Price Index      - name: STORE_SIZE
+
+      - name: UNEMPLOYMENT
+
+        description: Unemployment rate        description: Store size in square feet      - name: dept_name      - name: dept_name
+
 
 
 
