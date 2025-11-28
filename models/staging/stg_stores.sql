@@ -10,9 +10,9 @@ with source as (
 
 cleaned as (
     select
-        store,
-        type as store_type,
-        size as store_size
+        STORE,
+        TYPE as STORE_TYPE,
+        SIZE as STORE_SIZE
     from source
 )
 

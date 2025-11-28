@@ -4,50 +4,50 @@ models:
   - name: fact_walmart_sales
     description: Fact table for Walmart weekly sales with all metrics
     columns:
-      - name: store_key
+      - name: STORE_KEY
         description: Foreign key to dim_store
         tests:
           - not_null
           - relationships:
               to: ref('dim_store')
-              field: store_key
-      - name: date_key
+              field: STORE_KEY
+      - name: DATE_KEY
         description: Foreign key to dim_date
         tests:
           - relationships:
               to: ref('dim_date')
-              field: date_key
-      - name: store_id
+              field: DATE_KEY
+      - name: STORE_ID
         description: Store identifier
         tests:
           - not_null
-      - name: dept_id
+      - name: DEPT_ID
         description: Department identifier
         tests:
           - not_null
-      - name: store_date
+      - name: STORE_DATE
         description: Week end date
         tests:
           - not_null
-      - name: weekly_sales
+      - name: WEEKLY_SALES
         description: Weekly sales amount
-      - name: isholiday
+      - name: ISHOLIDAY
         description: Holiday flag
-      - name: temperature
+      - name: TEMPERATURE
         description: Average temperature
-      - name: fuel_price
+      - name: FUEL_PRICE
         description: Fuel price in the region
-      - name: markdown1
+      - name: MARKDOWN1
         description: Markdown data 1
-      - name: markdown2
+      - name: MARKDOWN2
         description: Markdown data 2
-      - name: markdown3
+      - name: MARKDOWN3
         description: Markdown data 3
-      - name: markdown4
+      - name: MARKDOWN4
         description: Markdown data 4
-      - name: markdown5
+      - name: MARKDOWN5
         description: Markdown data 5
-      - name: cpi
+      - name: CPI
         description: Consumer Price Index
-      - name: unemployment
+      - name: UNEMPLOYMENT
         description: Unemployment rate

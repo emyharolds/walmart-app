@@ -10,9 +10,9 @@ with source as (
 
 cleaned as (
     select
-        store,
-        dept,
-        trim(dept_name) as dept_name
+        STORE,
+        DEPT,
+        trim(DEPT_NAME) as DEPT_NAME
     from source
 )
 

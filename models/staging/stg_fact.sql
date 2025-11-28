@@ -10,20 +10,20 @@ with source as (
 
 cleaned as (
     select
-        store,
-        dept,
-        date as store_date,
-        weekly_sales,
-        isholiday,
-        temperature,
-        fuel_price,
-        markdown1,
-        markdown2,
-        markdown3,
-        markdown4,
-        markdown5,
-        cpi,
-        unemployment
+        STORE,
+        DEPT,
+        DATE as STORE_DATE,
+        WEEKLY_SALES,
+        ISHOLIDAY,
+        TEMPERATURE,
+        FUEL_PRICE,
+        MARKDOWN1,
+        MARKDOWN2,
+        MARKDOWN3,
+        MARKDOWN4,
+        MARKDOWN5,
+        CPI,
+        UNEMPLOYMENT
     from source
 )
 

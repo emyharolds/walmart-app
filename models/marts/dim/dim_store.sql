@@ -1,9 +1,9 @@
 {{
     config(
         materialized='incremental',
-        unique_key='store_key',
+        unique_key='STORE_KEY',
         incremental_strategy='merge',
-        merge_update_columns=['store_type', 'store_size', 'updated_at']
+        merge_update_columns=['STORE_TYPE', 'STORE_SIZE', 'UPDATED_AT']
     )
 }}
 
@@ -25,22 +25,22 @@ departments as (
 
 combined as (
     select
-        d.store,
-        d.dept,
-        d.dept_name,
-        s.store_type,
-        s.store_size
+        d.STORE,
+        d.DEPT,
+        d.DEPT_NAME,
+        s.STORE_TYPE,
+        s.STORE_SIZE
     from departments d
-    left join stores s on d.store = s.store
+    left join stores s on d.STORE = s.STORE
 )
 
 select
-    {{ dbt_utils.generate_surrogate_key(['store', 'dept']) }} as store_key,
-    store as store_id,
-    dept as dept_id,
-    dept_name,
-    store_type,
-    store_size,
-    current_timestamp() as created_at,
-    current_timestamp() as updated_at
+    {{ dbt_utils.generate_surrogate_key(['STORE', 'DEPT']) }} as STORE_KEY,
+    STORE as STORE_ID,
+    DEPT as DEPT_ID,
+    DEPT_NAME,
+    STORE_TYPE,
+    STORE_SIZE,
+    current_timestamp() as CREATED_AT,
+    current_timestamp() as UPDATED_AT
 from combined

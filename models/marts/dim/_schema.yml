@@ -4,45 +4,45 @@ models:
   - name: dim_date
     description: Date dimension table with calendar attributes
     columns:
-      - name: date_key
+      - name: DATE_KEY
         description: Primary key - date in DATE format
         tests:
           - unique
           - not_null
-      - name: full_date
+      - name: FULL_DATE
         description: Full date
-      - name: year
+      - name: YEAR
         description: Year
-      - name: quarter
+      - name: QUARTER
         description: Quarter number
-      - name: month
+      - name: MONTH
         description: Month number
-      - name: week_of_year
+      - name: WEEK_OF_YEAR
         description: Week of year
-      - name: day_of_week
+      - name: DAY_OF_WEEK
         description: Day of week (0=Sunday, 6=Saturday)
-      - name: is_weekend
+      - name: IS_WEEKEND
         description: Weekend flag
 
   - name: dim_store
     description: Store dimension combining store and department information
     columns:
-      - name: store_key
+      - name: STORE_KEY
         description: Surrogate key for store-department combination
         tests:
           - unique
           - not_null
-      - name: store_id
+      - name: STORE_ID
         description: Store identifier
         tests:
           - not_null
-      - name: dept_id
+      - name: DEPT_ID
         description: Department identifier
         tests:
           - not_null
-      - name: dept_name
+      - name: DEPT_NAME
         description: Department name
-      - name: store_type
+      - name: STORE_TYPE
         description: Store type (A, B, C)
-      - name: store_size
+      - name: STORE_SIZE
         description: Store size in square feet

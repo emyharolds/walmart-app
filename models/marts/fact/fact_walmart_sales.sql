@@ -1,7 +1,7 @@
 {{
     config(
         materialized='incremental',
-        unique_key=['store_id', 'dept_id', 'store_date'],
+        unique_key=['STORE_ID', 'DEPT_ID', 'STORE_DATE'],
         incremental_strategy='merge'
     )
 }}
@@ -18,56 +18,56 @@ with fact_data as (
 ),
 
 date_dim as (
-    select date_key, full_date from {{ ref('dim_date') }}
+    select DATE_KEY, FULL_DATE from {{ ref('dim_date') }}
 ),
 
 store_dim as (
-    select store_key, store_id, dept_id from {{ ref('dim_store') }}
+    select STORE_KEY, STORE_ID, DEPT_ID from {{ ref('dim_store') }}
 ),
 
 joined as (
     select
-        s.store_key,
-        f.store as store_id,
-        f.dept as dept_id,
-        f.store_date,
-        d.date_key,
-        f.weekly_sales,
-        f.isholiday,
-        f.temperature,
-        f.fuel_price,
-        f.markdown1,
-        f.markdown2,
-        f.markdown3,
-        f.markdown4,
-        f.markdown5,
-        f.cpi,
-        f.unemployment
+        s.STORE_KEY,
+        f.STORE as STORE_ID,
+        f.DEPT as DEPT_ID,
+        f.STORE_DATE,
+        d.DATE_KEY,
+        f.WEEKLY_SALES,
+        f.ISHOLIDAY,
+        f.TEMPERATURE,
+        f.FUEL_PRICE,
+        f.MARKDOWN1,
+        f.MARKDOWN2,
+        f.MARKDOWN3,
+        f.MARKDOWN4,
+        f.MARKDOWN5,
+        f.CPI,
+        f.UNEMPLOYMENT
     from fact_data f
-    left join date_dim d on f.store_date = d.full_date
-    left join store_dim s on f.store = s.store_id and f.dept = s.dept_id
+    left join date_dim d on f.STORE_DATE = d.FULL_DATE
+    left join store_dim s on f.STORE = s.STORE_ID and f.DEPT = s.DEPT_ID
     
     {% if is_incremental() %}
-    where f.store_date > (select coalesce(max(store_date), '1900-01-01') from {{ this }})
+    where f.STORE_DATE > (select coalesce(max(STORE_DATE), '1900-01-01') from {{ this }})
     {% endif %}
 )
 
 select
-    store_key,
-    store_id,
-    dept_id,
-    store_date,
-    date_key,
-    weekly_sales,
-    isholiday,
-    temperature,
-    fuel_price,
-    markdown1,
-    markdown2,
-    markdown3,
-    markdown4,
-    markdown5,
-    cpi,
-    unemployment,
-    current_timestamp() as created_at
+    STORE_KEY,
+    STORE_ID,
+    DEPT_ID,
+    STORE_DATE,
+    DATE_KEY,
+    WEEKLY_SALES,
+    ISHOLIDAY,
+    TEMPERATURE,
+    FUEL_PRICE,
+    MARKDOWN1,
+    MARKDOWN2,
+    MARKDOWN3,
+    MARKDOWN4,
+    MARKDOWN5,
+    CPI,
+    UNEMPLOYMENT,
+    current_timestamp() as CREATED_AT
 from joined
