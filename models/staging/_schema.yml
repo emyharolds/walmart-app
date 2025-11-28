@@ -1,281 +1,57 @@
-version: 2version: 2version: 2version: 2
-
-
+version: 2
 
 models:
-
   - name: stg_department
-
-    description: Staging table for Walmart department datamodels:
-
+    description: Staging table for Walmart department data
     columns:
-
-      - name: STORE  - name: stg_department
-
+      - name: STORE
         description: Store identifier
-
-        tests:    description: Staging table for Walmart department datamodels:models:
-
+        tests:
           - not_null
-
-      - name: DEPT    columns:
-
+      - name: DEPT
         description: Department identifier
-
-        tests:      - name: STORE  - name: stg_department  - name: stg_department
-
+        tests:
           - not_null
-
-      - name: DEPT_NAME        description: Store identifier
-
+      - name: DEPT_NAME
         description: Department name
 
-        tests:    description: Staging table for Walmart department data    description: Staging table for Walmart department data
-
   - name: stg_stores
-
-    description: Staging table for Walmart store characteristics          - not_null
-
+    description: Staging table for Walmart store characteristics
     columns:
-
-      - name: STORE      - name: DEPT    columns:    columns:
-
+      - name: STORE
         description: Store identifier
-
-        tests:        description: Department identifier
-
+        tests:
           - not_null
-
-          - unique        tests:      - name: store      - name: store
-
+          - unique
       - name: STORE_TYPE
-
-        description: Store type (A, B, C)          - not_null
-
+        description: Store type (A, B, C)
       - name: STORE_SIZE
+        description: Store size in square feet
 
-        description: Store size in square feet      - name: DEPT_NAME        description: Store identifier        description: Store identifier
-
-
-
-  - name: stg_fact        description: Department name
-
+  - name: stg_fact
     description: Staging table for Walmart weekly sales facts
-
-    columns:        tests:        tests:
-
+    columns:
       - name: STORE
-
-        description: Store identifier  - name: stg_stores
-
+        description: Store identifier
         tests:
-
-          - not_null    description: Staging table for Walmart store characteristics          - not_null          - not_null
-
+          - not_null
       - name: DEPT
-
-        description: Department identifier    columns:
-
+        description: Department identifier
         tests:
-
-          - not_null      - name: STORE      - name: dept      - name: dept
-
+          - not_null
       - name: STORE_DATE
-
-        description: Week end date        description: Store identifier
-
+        description: Week end date
         tests:
-
-          - not_null        tests:        description: Department identifier        description: Department identifier
-
+          - not_null
       - name: WEEKLY_SALES
-
-        description: Weekly sales amount          - not_null
-
+        description: Weekly sales amount
       - name: ISHOLIDAY
-
-        description: Holiday flag          - unique        tests:        tests:
-
+        description: Holiday flag
       - name: TEMPERATURE
-
-        description: Average temperature      - name: STORE_TYPE
-
+        description: Average temperature
       - name: FUEL_PRICE
-
-        description: Fuel price in the region        description: Store type (A, B, C)          - not_null          - not_null
-
+        description: Fuel price in the region
       - name: CPI
-
-        description: Consumer Price Index      - name: STORE_SIZE
-
+        description: Consumer Price Index
       - name: UNEMPLOYMENT
-
-        description: Unemployment rate        description: Store size in square feet      - name: dept_name      - name: dept_name
-
-
-
-
-  - name: stg_fact        description: Department name        description: Department name
-
-    description: Staging table for Walmart weekly sales facts
-
-    columns:
-
-      - name: STORE
-
-        description: Store identifier  - name: stg_stores  - name: stg_stores
-
-        tests:
-
-          - not_null    description: Staging table for Walmart store characteristics    description: Staging table for Walmart store characteristics
-
-      - name: DEPT
-
-        description: Department identifier    columns:    columns:
-
-        tests:
-
-          - not_null      - name: store      - name: store
-
-      - name: STORE_DATE
-
-        description: Week end date        description: Store identifier        description: Store identifier
-
-        tests:
-
-          - not_null        tests:        tests:
-
-      - name: WEEKLY_SALES
-
-        description: Weekly sales amount          - not_null          - not_null
-
-      - name: ISHOLIDAY
-
-        description: Holiday flag          - unique          - unique
-
-      - name: TEMPERATURE
-
-        description: Average temperature      - name: store_type      - name: store_type
-
-      - name: FUEL_PRICE
-
-        description: Fuel price in the region        description: Store type (A, B, C)        description: Store type (A, B, C)
-
-      - name: CPI
-
-        description: Consumer Price Index      - name: store_size      - name: store_size
-
-      - name: UNEMPLOYMENT
-
-        description: Unemployment rate        description: Store size in square feet        description: Store size in square feet
-
-
-
-
-  - name: stg_fact  - name: stg_fact
-
-    description: Staging table for Walmart weekly sales facts    description: Staging table for Walmart weekly sales facts
-
-    columns:    columns:
-
-      - name: store      - name: store
-
-        description: Store identifier        description: Store identifier
-
-        tests:        tests:
-
-          - not_null          - not_null
-
-      - name: dept      - name: dept
-
-        description: Department identifier        description: Department identifier
-
-        tests:        tests:
-
-          - not_null          - not_null
-
-      - name: store_date      - name: store_date
-
-        description: Week end date        description: Week end date
-
-        tests:        tests:
-
-          - not_null          - not_null
-
-      - name: weekly_sales      - name: weekly_sales
-
-        description: Weekly sales amount        description: Weekly sales amount
-
-      - name: isholiday      - name: isholiday
-
-        description: Holiday flag        description: Holiday flag
-
-      - name: temperature      - name: temperature
-
-        description: Average temperature        description: Average temperature
-
-      - name: fuel_price      - name: fuel_price
-
-        description: Fuel price in the region        description: Fuel price in the region
-
-      - name: cpi      - name: cpi
-
-        description: Consumer Price Index        description: Consumer Price Index
-
-      - name: unemployment      - name: unemployment
-
-        description: Unemployment rate        description: Unemployment rate
-
-
-    description: Staged customer data with cleaned and standardized fields
-    columns:
-      - name: customer_id
-        description: Primary key for customer
-        tests:
-          - unique
-          - not_null
-
-  - name: stg_products
-    description: Staged product data with cleaned and standardized fields
-    columns:
-      - name: product_id
-        description: Primary key for product
-        tests:
-          - unique
-          - not_null
-
-  - name: stg_stores
-    description: Staged store data with cleaned and standardized fields
-    columns:
-      - name: store_id
-        description: Primary key for store
-        tests:
-          - unique
-          - not_null
-
-  - name: stg_orders
-    description: Staged order data with cleaned and standardized fields
-    columns:
-      - name: order_id
-        description: Primary key for order
-        tests:
-          - unique
-          - not_null
-
-  - name: stg_order_items
-    description: Staged order item data with cleaned and standardized fields
-    columns:
-      - name: order_item_id
-        description: Primary key for order item
-        tests:
-          - unique
-          - not_null
-
-  - name: stg_suppliers
-    description: Staged supplier data with cleaned and standardized fields
-    columns:
-      - name: supplier_id
-        description: Primary key for supplier
-        tests:
-          - unique
-          - not_null
+        description: Unemployment rate
