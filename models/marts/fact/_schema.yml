@@ -1,145 +1,53 @@
 version: 2
 
 models:
-  - name: fact_sales
-    description: >
-      Sales fact table at the line item (order_item) grain.
-      Contains measures for quantity, amounts, and calculated profit.
-      Links to customer, product, store, and date dimensions.
+  - name: fact_walmart_sales
+    description: Fact table for Walmart weekly sales with all metrics
     columns:
-      - name: sales_key
-        description: Surrogate key for the fact record
-        tests:
-          - unique
-          - not_null
-      - name: customer_key
-        description: Foreign key to dim_customer
-        tests:
-          - not_null
-      - name: product_key
-        description: Foreign key to dim_product
-        tests:
-          - not_null
       - name: store_key
         description: Foreign key to dim_store
         tests:
           - not_null
+          - relationships:
+              to: ref('dim_store')
+              field: store_key
       - name: date_key
         description: Foreign key to dim_date
         tests:
-          - not_null
-      - name: order_id
-        description: Order identifier (degenerate dimension)
+          - relationships:
+              to: ref('dim_date')
+              field: date_key
+      - name: store_id
+        description: Store identifier
         tests:
           - not_null
-      - name: order_item_id
-        description: Order item identifier (degenerate dimension)
+      - name: dept_id
+        description: Department identifier
         tests:
           - not_null
-      - name: order_status
-        description: Status of the order
-      - name: payment_method
-        description: Payment method used
-      - name: quantity
-        description: Quantity of items sold
+      - name: store_date
+        description: Week end date
         tests:
           - not_null
-      - name: unit_price
-        description: Unit price at time of sale
-        tests:
-          - not_null
-      - name: discount_percent
-        description: Discount percentage applied
-      - name: line_total
-        description: Total amount for the line item
-        tests:
-          - not_null
-      - name: gross_amount
-        description: Calculated gross amount (quantity * unit_price)
-      - name: discount_amount
-        description: Calculated discount amount
-      - name: cost_amount
-        description: Calculated cost amount
-      - name: profit_amount
-        description: Calculated profit amount
-      - name: order_total_amount
-        description: Total order amount (header level)
-      - name: order_discount_amount
-        description: Order-level discount amount
-      - name: order_tax_amount
-        description: Order-level tax amount
-      - name: order_date
-        description: Date of the order
-      - name: order_timestamp
-        description: Timestamp of the order
-      - name: loaded_at
-        description: Timestamp when record was loaded
-      - name: created_at
-        description: Fact record creation timestamp
-      - name: updated_at
-        description: Fact record update timestamp
-
-  - name: fact_orders
-    description: >
-      Orders fact table at the order header grain.
-      Contains order-level measures and aggregated line item metrics.
-      Links to customer, store, and date dimensions.
-    columns:
-      - name: order_key
-        description: Surrogate key for the fact record
-        tests:
-          - unique
-          - not_null
-      - name: customer_key
-        description: Foreign key to dim_customer
-        tests:
-          - not_null
-      - name: store_key
-        description: Foreign key to dim_store
-        tests:
-          - not_null
-      - name: date_key
-        description: Foreign key to dim_date
-        tests:
-          - not_null
-      - name: order_id
-        description: Order identifier (degenerate dimension)
-        tests:
-          - unique
-          - not_null
-      - name: order_status
-        description: Status of the order
-      - name: payment_method
-        description: Payment method used
-      - name: total_amount
-        description: Total order amount
-        tests:
-          - not_null
-      - name: discount_amount
-        description: Discount amount applied
-      - name: tax_amount
-        description: Tax amount
-      - name: net_amount
-        description: Net amount (total - discount)
-      - name: unique_products_count
-        description: Number of unique products in the order
-      - name: line_items_count
-        description: Number of line items in the order
-      - name: total_quantity
-        description: Total quantity of items ordered
-      - name: avg_line_item_value
-        description: Average value per line item
-      - name: order_date
-        description: Date of the order
-      - name: order_timestamp
-        description: Timestamp of the order
-      - name: order_hour
-        description: Hour of day when order was placed
-      - name: order_day_type
-        description: Weekend or Weekday indicator
-      - name: loaded_at
-        description: Timestamp when record was loaded
-      - name: created_at
-        description: Fact record creation timestamp
-      - name: updated_at
-        description: Fact record update timestamp
+      - name: weekly_sales
+        description: Weekly sales amount
+      - name: isholiday
+        description: Holiday flag
+      - name: temperature
+        description: Average temperature
+      - name: fuel_price
+        description: Fuel price in the region
+      - name: markdown1
+        description: Markdown data 1
+      - name: markdown2
+        description: Markdown data 2
+      - name: markdown3
+        description: Markdown data 3
+      - name: markdown4
+        description: Markdown data 4
+      - name: markdown5
+        description: Markdown data 5
+      - name: cpi
+        description: Consumer Price Index
+      - name: unemployment
+        description: Unemployment rate

@@ -1,7 +1,118 @@
-version: 2
+version: 2version: 2
 
-models:
-  - name: stg_customers
+
+
+models:models:
+
+  - name: stg_department  - name: stg_department
+
+    description: Staging table for Walmart department data    description: Staging table for Walmart department data
+
+    columns:    columns:
+
+      - name: store      - name: store
+
+        description: Store identifier        description: Store identifier
+
+        tests:        tests:
+
+          - not_null          - not_null
+
+      - name: dept      - name: dept
+
+        description: Department identifier        description: Department identifier
+
+        tests:        tests:
+
+          - not_null          - not_null
+
+      - name: dept_name      - name: dept_name
+
+        description: Department name        description: Department name
+
+
+
+  - name: stg_stores  - name: stg_stores
+
+    description: Staging table for Walmart store characteristics    description: Staging table for Walmart store characteristics
+
+    columns:    columns:
+
+      - name: store      - name: store
+
+        description: Store identifier        description: Store identifier
+
+        tests:        tests:
+
+          - not_null          - not_null
+
+          - unique          - unique
+
+      - name: store_type      - name: store_type
+
+        description: Store type (A, B, C)        description: Store type (A, B, C)
+
+      - name: store_size      - name: store_size
+
+        description: Store size in square feet        description: Store size in square feet
+
+
+
+  - name: stg_fact  - name: stg_fact
+
+    description: Staging table for Walmart weekly sales facts    description: Staging table for Walmart weekly sales facts
+
+    columns:    columns:
+
+      - name: store      - name: store
+
+        description: Store identifier        description: Store identifier
+
+        tests:        tests:
+
+          - not_null          - not_null
+
+      - name: dept      - name: dept
+
+        description: Department identifier        description: Department identifier
+
+        tests:        tests:
+
+          - not_null          - not_null
+
+      - name: store_date      - name: store_date
+
+        description: Week end date        description: Week end date
+
+        tests:        tests:
+
+          - not_null          - not_null
+
+      - name: weekly_sales      - name: weekly_sales
+
+        description: Weekly sales amount        description: Weekly sales amount
+
+      - name: isholiday      - name: isholiday
+
+        description: Holiday flag        description: Holiday flag
+
+      - name: temperature      - name: temperature
+
+        description: Average temperature        description: Average temperature
+
+      - name: fuel_price      - name: fuel_price
+
+        description: Fuel price in the region        description: Fuel price in the region
+
+      - name: cpi      - name: cpi
+
+        description: Consumer Price Index        description: Consumer Price Index
+
+      - name: unemployment      - name: unemployment
+
+        description: Unemployment rate        description: Unemployment rate
+
+
     description: Staged customer data with cleaned and standardized fields
     columns:
       - name: customer_id
