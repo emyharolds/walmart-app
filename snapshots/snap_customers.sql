@@ -2,7 +2,7 @@
 
 {{
     config(
-        target_database=env_var('SNOWFLAKE_DATABASE', 'WALMART_DB'),
+        target_database=env_var('DBT_SNOWFLAKE_DATABASE', 'WALM_DATA'),
         target_schema='snapshots',
         unique_key='customer_id',
         strategy='timestamp',
