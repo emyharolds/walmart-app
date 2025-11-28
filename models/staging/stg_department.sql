@@ -5,14 +5,14 @@
 }}
 
 with source as (
-    select * from {{ source('raw', 'stores') }}
+    select * from {{ source('raw', 'department') }}
 ),
 
 cleaned as (
     select
         store,
-        type as store_type,
-        size as store_size
+        dept,
+        trim(dept_name) as dept_name
     from source
 )
 
