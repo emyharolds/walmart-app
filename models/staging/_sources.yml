@@ -2,205 +2,71 @@ version: 2
 
 sources:
   - name: raw
-    description: Raw data loaded from S3 via Snowflake COPY/PIPE
+    description: Raw Walmart data loaded from S3 via Snowflake COPY/PIPE
     database: "{{ env_var('DBT_SNOWFLAKE_DATABASE', 'WALM_DATA') }}"
     schema: raw
-    loader: snowpipe
-    loaded_at_field: _loaded_at
-    freshness:
-      warn_after: {count: 12, period: hour}
-      error_after: {count: 24, period: hour}
     tables:
-      - name: raw_customers
-        description: Raw customer data loaded from S3
+      - name: department
+        description: Department information for each store
         columns:
-          - name: customer_id
-            description: Unique customer identifier
-            tests:
-              - not_null
-          - name: first_name
-            description: Customer first name
-          - name: last_name
-            description: Customer last name
-          - name: email
-            description: Customer email address
-            tests:
-              - unique
-          - name: phone
-            description: Customer phone number
-          - name: address
-            description: Customer street address
-          - name: city
-            description: Customer city
-          - name: state
-            description: Customer state
-          - name: zip_code
-            description: Customer ZIP code
-          - name: country
-            description: Customer country
-          - name: created_at
-            description: Record creation timestamp
-          - name: updated_at
-            description: Record last update timestamp
-          - name: _loaded_at
-            description: Timestamp when record was loaded via Snowpipe
-
-      - name: raw_products
-        description: Raw product data loaded from S3
-        columns:
-          - name: product_id
-            description: Unique product identifier
-            tests:
-              - not_null
-          - name: product_name
-            description: Product name
-          - name: description
-            description: Product description
-          - name: category
-            description: Product category
-          - name: subcategory
-            description: Product subcategory
-          - name: brand
-            description: Product brand
-          - name: unit_price
-            description: Product unit price
-          - name: cost
-            description: Product cost
-          - name: supplier_id
-            description: Supplier identifier
-          - name: is_active
-            description: Whether product is active
-          - name: created_at
-            description: Record creation timestamp
-          - name: updated_at
-            description: Record last update timestamp
-          - name: _loaded_at
-            description: Timestamp when record was loaded via Snowpipe
-
-      - name: raw_stores
-        description: Raw store data loaded from S3
-        columns:
-          - name: store_id
-            description: Unique store identifier
-            tests:
-              - not_null
-          - name: store_name
-            description: Store name
-          - name: store_type
-            description: Store type (e.g., Supercenter, Neighborhood Market)
-          - name: address
-            description: Store street address
-          - name: city
-            description: Store city
-          - name: state
-            description: Store state
-          - name: zip_code
-            description: Store ZIP code
-          - name: country
-            description: Store country
-          - name: region
-            description: Store region
-          - name: district
-            description: Store district
-          - name: manager_name
-            description: Store manager name
-          - name: open_date
-            description: Store opening date
-          - name: square_footage
-            description: Store size in square feet
-          - name: is_active
-            description: Whether store is active
-          - name: created_at
-            description: Record creation timestamp
-          - name: updated_at
-            description: Record last update timestamp
-          - name: _loaded_at
-            description: Timestamp when record was loaded via Snowpipe
-
-      - name: raw_orders
-        description: Raw order/transaction data loaded from S3
-        columns:
-          - name: order_id
-            description: Unique order identifier
-            tests:
-              - not_null
-          - name: customer_id
-            description: Customer identifier
-          - name: store_id
+          - name: store
             description: Store identifier
-          - name: order_date
-            description: Order date
-          - name: order_timestamp
-            description: Order timestamp
-          - name: order_status
-            description: Order status
-          - name: payment_method
-            description: Payment method used
-          - name: total_amount
-            description: Total order amount
-          - name: discount_amount
-            description: Discount amount applied
-          - name: tax_amount
-            description: Tax amount
-          - name: created_at
-            description: Record creation timestamp
-          - name: updated_at
-            description: Record last update timestamp
-          - name: _loaded_at
-            description: Timestamp when record was loaded via Snowpipe
-
-      - name: raw_order_items
-        description: Raw order line items loaded from S3
-        columns:
-          - name: order_item_id
-            description: Unique order item identifier
             tests:
               - not_null
-          - name: order_id
-            description: Order identifier
-          - name: product_id
-            description: Product identifier
-          - name: quantity
-            description: Quantity ordered
-          - name: unit_price
-            description: Unit price at time of sale
-          - name: discount_percent
-            description: Discount percentage applied
-          - name: line_total
-            description: Line item total
-          - name: created_at
-            description: Record creation timestamp
-          - name: _loaded_at
-            description: Timestamp when record was loaded via Snowpipe
-
-      - name: raw_suppliers
-        description: Raw supplier data loaded from S3
-        columns:
-          - name: supplier_id
-            description: Unique supplier identifier
+          - name: dept
+            description: Department identifier
             tests:
               - not_null
-          - name: supplier_name
-            description: Supplier name
-          - name: contact_name
-            description: Supplier contact name
-          - name: contact_email
-            description: Supplier contact email
-          - name: contact_phone
-            description: Supplier contact phone
-          - name: address
-            description: Supplier address
-          - name: city
-            description: Supplier city
-          - name: state
-            description: Supplier state
-          - name: country
-            description: Supplier country
-          - name: is_active
-            description: Whether supplier is active
-          - name: created_at
-            description: Record creation timestamp
-          - name: updated_at
-            description: Record last update timestamp
-          - name: _loaded_at
-            description: Timestamp when record was loaded via Snowpipe
+          - name: dept_name
+            description: Department name
+
+      - name: stores
+        description: Store characteristics and attributes
+        columns:
+          - name: store
+            description: Store identifier
+            tests:
+              - not_null
+              - unique
+          - name: type
+            description: Store type (A, B, C)
+          - name: size
+            description: Store size in square feet
+
+      - name: fact
+        description: Weekly sales facts for each store and department
+        columns:
+          - name: store
+            description: Store identifier
+            tests:
+              - not_null
+          - name: dept
+            description: Department identifier
+            tests:
+              - not_null
+          - name: date
+            description: Week end date
+            tests:
+              - not_null
+          - name: weekly_sales
+            description: Weekly sales amount
+          - name: isholiday
+            description: Holiday flag (TRUE/FALSE)
+          - name: temperature
+            description: Average temperature
+          - name: fuel_price
+            description: Fuel price in the region
+          - name: markdown1
+            description: Anonymized markdown data
+          - name: markdown2
+            description: Anonymized markdown data
+          - name: markdown3
+            description: Anonymized markdown data
+          - name: markdown4
+            description: Anonymized markdown data
+          - name: markdown5
+            description: Anonymized markdown data
+          - name: cpi
+            description: Consumer Price Index
+          - name: unemployment
+            description: Unemployment rate
