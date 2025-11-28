@@ -113,8 +113,9 @@ fact_orders as (
         
         -- Time-based attributes (for analysis)
         extract(hour from o.order_timestamp) as order_hour,
+        -- Snowflake dayofweek: 0=Sunday, 6=Saturday
         case 
-            when extract(dayofweek from o.order_date) in (0, 6) then 'Weekend'
+            when dayofweek(o.order_date) in (0, 6) then 'Weekend'
             else 'Weekday'
         end as order_day_type,
         
