@@ -24,8 +24,6 @@ models:
     staging:
       +materialized: view
       +schema: staging
-    intermediate:
-      +materialized: ephemeral
     marts:
       dim:
         +materialized: incremental
