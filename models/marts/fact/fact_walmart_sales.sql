@@ -1,7 +1,7 @@
 {{
     config(
         materialized='incremental',
-        unique_key=['STORE_ID', 'DEPT_ID', 'STORE_DATE'],
+        unique_key=['STORE_ID', 'STORE_DATE'],
         incremental_strategy='merge'
     )
 }}
@@ -9,7 +9,7 @@
 {#
     Fact Table: fact_walmart_sales
     
-    Weekly sales facts for Walmart stores and departments
+    Weekly sales facts for Walmart stores
     including various metrics and indicators.
 #}
 
@@ -21,15 +21,9 @@ date_dim as (
     select DATE_KEY, FULL_DATE from {{ ref('dim_date') }}
 ),
 
-store_dim as (
-    select STORE_KEY, STORE_ID, DEPT_ID from {{ ref('dim_store') }}
-),
-
 joined as (
     select
-        s.STORE_KEY,
         f.STORE as STORE_ID,
-        f.DEPT as DEPT_ID,
         f.STORE_DATE,
         d.DATE_KEY,
         f.WEEKLY_SALES,
@@ -45,7 +39,6 @@ joined as (
         f.UNEMPLOYMENT
     from fact_data f
     left join date_dim d on f.STORE_DATE = d.FULL_DATE
-    left join store_dim s on f.STORE = s.STORE_ID and f.DEPT = s.DEPT_ID
     
     {% if is_incremental() %}
     where f.STORE_DATE > (select coalesce(max(STORE_DATE), '1900-01-01') from {{ this }})
@@ -53,9 +46,7 @@ joined as (
 )
 
 select
-    STORE_KEY,
     STORE_ID,
-    DEPT_ID,
     STORE_DATE,
     DATE_KEY,
     WEEKLY_SALES,

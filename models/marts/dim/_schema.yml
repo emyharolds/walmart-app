@@ -40,8 +40,6 @@ models:
         description: Department identifier
         tests:
           - not_null
-      - name: DEPT_NAME
-        description: Department name
       - name: STORE_TYPE
         description: Store type (A, B, C)
       - name: STORE_SIZE

@@ -4,27 +4,16 @@ models:
   - name: fact_walmart_sales
     description: Fact table for Walmart weekly sales with all metrics
     columns:
-      - name: STORE_KEY
-        description: Foreign key to dim_store
+      - name: STORE_ID
+        description: Store identifier
         tests:
           - not_null
-          - relationships:
-              to: ref('dim_store')
-              field: STORE_KEY
       - name: DATE_KEY
         description: Foreign key to dim_date
         tests:
           - relationships:
               to: ref('dim_date')
               field: DATE_KEY
-      - name: STORE_ID
-        description: Store identifier
-        tests:
-          - not_null
-      - name: DEPT_ID
-        description: Department identifier
-        tests:
-          - not_null
       - name: STORE_DATE
         description: Week end date
         tests:

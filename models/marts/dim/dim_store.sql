@@ -27,7 +27,6 @@ combined as (
     select
         d.STORE,
         d.DEPT,
-        d.DEPT_NAME,
         s.STORE_TYPE,
         s.STORE_SIZE
     from departments d
@@ -38,7 +37,6 @@ select
     {{ dbt_utils.generate_surrogate_key(['STORE', 'DEPT']) }} as STORE_KEY,
     STORE as STORE_ID,
     DEPT as DEPT_ID,
-    DEPT_NAME,
     STORE_TYPE,
     STORE_SIZE,
     current_timestamp() as CREATED_AT,

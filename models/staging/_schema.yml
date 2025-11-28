@@ -12,8 +12,6 @@ models:
         description: Department identifier
         tests:
           - not_null
-      - name: DEPT_NAME
-        description: Department name
 
   - name: stg_stores
     description: Staging table for Walmart store characteristics
@@ -33,10 +31,6 @@ models:
     columns:
       - name: STORE
         description: Store identifier
-        tests:
-          - not_null
-      - name: DEPT
-        description: Department identifier
         tests:
           - not_null
       - name: STORE_DATE

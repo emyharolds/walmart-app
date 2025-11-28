@@ -9,64 +9,58 @@ sources:
       - name: department
         description: Department information for each store
         columns:
-          - name: STORE
+          - name: store
             description: Store identifier
             tests:
               - not_null
-          - name: DEPT
+          - name: dept
             description: Department identifier
             tests:
               - not_null
-          - name: DEPT_NAME
-            description: Department name
 
       - name: stores
         description: Store characteristics and attributes
         columns:
-          - name: STORE
+          - name: store
             description: Store identifier
             tests:
               - not_null
               - unique
-          - name: TYPE
+          - name: type
             description: Store type (A, B, C)
-          - name: SIZE
+          - name: size
             description: Store size in square feet
 
       - name: fact
         description: Weekly sales facts for each store and department
         columns:
-          - name: STORE
+          - name: store
             description: Store identifier
             tests:
               - not_null
-          - name: DEPT
-            description: Department identifier
-            tests:
-              - not_null
-          - name: DATE
+          - name: date
             description: Week end date
             tests:
               - not_null
-          - name: WEEKLY_SALES
+          - name: weekly_sales
             description: Weekly sales amount
-          - name: ISHOLIDAY
+          - name: isholiday
             description: Holiday flag (TRUE/FALSE)
-          - name: TEMPERATURE
+          - name: temperature
             description: Average temperature
-          - name: FUEL_PRICE
+          - name: fuel_price
             description: Fuel price in the region
-          - name: MARKDOWN1
+          - name: markdown1
             description: Anonymized markdown data
-          - name: MARKDOWN2
+          - name: markdown2
             description: Anonymized markdown data
-          - name: MARKDOWN3
+          - name: markdown3
             description: Anonymized markdown data
-          - name: MARKDOWN4
+          - name: markdown4
             description: Anonymized markdown data
-          - name: MARKDOWN5
+          - name: markdown5
             description: Anonymized markdown data
-          - name: CPI
+          - name: cpi
             description: Consumer Price Index
-          - name: UNEMPLOYMENT
+          - name: unemployment
             description: Unemployment rate
