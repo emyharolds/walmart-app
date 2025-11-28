@@ -3,7 +3,7 @@ version: 2
 sources:
   - name: raw
     description: Raw data loaded from S3 via Snowflake COPY/PIPE
-    database: "{{ env_var('SNOWFLAKE_DATABASE', 'WALMART_DB') }}"
+    database: "{{ env_var('DBT_SNOWFLAKE_DATABASE', 'WALM_DATA') }}"
     schema: raw
     loader: snowpipe
     loaded_at_field: _loaded_at
