@@ -1,0 +1,55 @@
+# dbt_project.yml
+
+name: 'walmart_datamart'
+version: '1.0.0'
+config-version: 2
+
+# This setting configures which "profile" dbt uses for this project.
+profile: 'walmart_datamart'
+
+# These configurations specify where dbt should look for different types of files.
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+# Model configurations
+models:
+  walmart_datamart:
+    # Staging models - ephemeral or views
+    staging:
+      +materialized: view
+      +schema: staging
+      
+    # Mart models - tables with appropriate materializations
+    mart:
+      +materialized: table
+      +schema: mart
+      dimensions:
+        +materialized: incremental
+        +on_schema_change: "append_new_columns"
+      facts:
+        +materialized: incremental
+        +on_schema_change: "append_new_columns"
+
+# Snapshots configuration
+snapshots:
+  walmart_datamart:
+    +target_schema: mart
+    +strategy: check
+    +unique_key: 'store_id || dept_id'
+    +check_cols: 'all'
+
+# Snowflake-specific configurations
+vars:
+  # Date format
+  date_format: 'YYYY-MM-DD'
+  
+  # SCD2 end date for active records
+  far_future_date: '9999-12-31 23:59:59'

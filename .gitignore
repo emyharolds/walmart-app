@@ -1,0 +1,32 @@
+# .gitignore for dbt project
+
+# dbt specific
+target/
+dbt_packages/
+logs/
+*.log
+
+# Python
+*.pyc
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+venv/
+env/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Credentials (IMPORTANT - never commit these)
+profiles.yml
+.env
+*.pem
+*.p8

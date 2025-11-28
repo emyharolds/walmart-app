@@ -1,0 +1,154 @@
+version: 2
+
+models:
+  - name: stg_department
+    description: Staging model for department sales data
+    columns:
+      - name: store
+        description: Store number
+        tests:
+          - not_null
+      - name: dept
+        description: Department number
+        tests:
+          - not_null
+      - name: store_date
+        description: Week date
+        tests:
+          - not_null
+      - name: weekly_sales
+        description: Sales for the department
+      - name: isholiday
+        description: Whether the week is a special holiday week
+        
+  - name: stg_fact
+    description: Staging model for store-level facts
+    columns:
+      - name: store
+        description: Store number
+        tests:
+          - not_null
+      - name: store_date
+        description: Week date
+        tests:
+          - not_null
+      - name: temperature
+        description: Average temperature in the region
+      - name: fuel_price
+        description: Cost of fuel in the region
+      - name: unemployment
+        description: Unemployment rate
+      - name: cpi
+        description: Consumer price index
+        
+  - name: stg_stores
+    description: Staging model for store information
+    columns:
+      - name: store
+        description: Store number
+        tests:
+          - not_null
+          - unique
+      - name: store_type
+        description: Store type (A, B, or C)
+        tests:
+          - accepted_values:
+              values: ['A', 'B', 'C']
+      - name: store_size
+        description: Store size in square feet
+        tests:
+          - not_null
+
+  - name: walmart_date_dim
+    description: Date dimension table with SCD Type 1
+    columns:
+      - name: date_id
+        description: Surrogate key for date
+        tests:
+          - unique
+          - not_null
+      - name: store_date
+        description: Actual date
+        tests:
+          - unique
+          - not_null
+      - name: isholiday
+        description: Whether the date is a holiday
+      - name: insert_date
+        description: When the record was first inserted
+      - name: update_date
+        description: When the record was last updated
+        
+  - name: walmart_store_dim
+    description: Store dimension table with SCD Type 1
+    columns:
+      - name: store_id
+        description: Store identifier
+        tests:
+          - not_null
+      - name: dept_id
+        description: Department identifier
+        tests:
+          - not_null
+      - name: store_type
+        description: Type of store (A, B, or C)
+      - name: store_size
+        description: Store size in square feet
+      - name: insert_date
+        description: When the record was first inserted
+      - name: update_date
+        description: When the record was last updated
+    tests:
+      - unique:
+          column_name: "store_id || '_' || dept_id"
+          
+  - name: walmart_fact_table
+    description: Fact table with SCD Type 2 for historical tracking
+    columns:
+      - name: store_id
+        description: Store identifier (FK)
+        tests:
+          - not_null
+          - relationships:
+              to: ref('walmart_store_dim')
+              field: store_id
+      - name: dept_id
+        description: Department identifier (FK)
+        tests:
+          - not_null
+      - name: store_weekly_sales
+        description: Weekly sales amount
+      - name: fuel_price
+        description: Fuel price in the region
+      - name: store_temperature
+        description: Average temperature
+      - name: unemployment
+        description: Unemployment rate
+      - name: cpi
+        description: Consumer price index
+      - name: markdown1
+        description: Markdown 1
+      - name: markdown2
+        description: Markdown 2
+      - name: markdown3
+        description: Markdown 3
+      - name: markdown4
+        description: Markdown 4
+      - name: markdown5
+        description: Markdown 5
+      - name: vrsn_start_date
+        description: When this version became active
+        tests:
+          - not_null
+      - name: vrsn_end_date
+        description: When this version expired (9999-12-31 if current)
+        tests:
+          - not_null
+      - name: is_current
+        description: Whether this is the current active version
+        tests:
+          - not_null
+      - name: insert_date
+        description: When the record was inserted
+      - name: update_date
+        description: When the record was last updated

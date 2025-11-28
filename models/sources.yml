@@ -1,0 +1,65 @@
+version: 2
+
+sources:
+  - name: raw_walmart
+    description: Raw tables loaded from S3 via Snowpipe
+    database: WALM_DATA
+    schema: RAW
+    tables:
+      - name: department
+        description: Store and department weekly sales data
+        columns:
+          - name: store
+            description: Store number
+          - name: dept
+            description: Department number
+          - name: date
+            description: Week date
+          - name: weekly_sales
+            description: Sales for the given department in the given store
+          - name: isholiday
+            description: Whether the week is a special holiday week
+          - name: load_timestamp
+            description: Timestamp when data was loaded
+            
+      - name: fact
+        description: Additional store-level facts including temperature, fuel prices, and markdowns
+        columns:
+          - name: store
+            description: Store number
+          - name: date
+            description: Week date
+          - name: temperature
+            description: Average temperature in the region
+          - name: fuel_price
+            description: Cost of fuel in the region
+          - name: markdown1
+            description: Anonymized markdown data
+          - name: markdown2
+            description: Anonymized markdown data
+          - name: markdown3
+            description: Anonymized markdown data
+          - name: markdown4
+            description: Anonymized markdown data
+          - name: markdown5
+            description: Anonymized markdown data
+          - name: cpi
+            description: Consumer price index
+          - name: unemployment
+            description: Unemployment rate
+          - name: isholiday
+            description: Whether the week is a special holiday week
+          - name: load_timestamp
+            description: Timestamp when data was loaded
+            
+      - name: stores
+        description: Store type and size information
+        columns:
+          - name: store
+            description: Store number
+          - name: type
+            description: Store type (A, B, or C)
+          - name: size
+            description: Store size in square feet
+          - name: load_timestamp
+            description: Timestamp when data was loaded
