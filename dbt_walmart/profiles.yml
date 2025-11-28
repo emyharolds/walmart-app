@@ -1,0 +1,29 @@
+# This file contains the connection profile for dbt to connect to Snowflake.
+# In production, sensitive values should be stored as environment variables.
+
+dbt_walmart:
+  target: dev
+  outputs:
+    dev:
+      type: snowflake
+      account: "{{ env_var('SNOWFLAKE_ACCOUNT') }}"
+      user: "{{ env_var('SNOWFLAKE_USER') }}"
+      password: "{{ env_var('SNOWFLAKE_PASSWORD') }}"
+      role: "{{ env_var('SNOWFLAKE_ROLE', 'TRANSFORMER') }}"
+      database: "{{ env_var('SNOWFLAKE_DATABASE', 'WALMART_DB') }}"
+      warehouse: "{{ env_var('SNOWFLAKE_WAREHOUSE', 'WALMART_WH') }}"
+      schema: raw
+      threads: 4
+      client_session_keep_alive: False
+
+    prod:
+      type: snowflake
+      account: "{{ env_var('SNOWFLAKE_ACCOUNT') }}"
+      user: "{{ env_var('SNOWFLAKE_USER') }}"
+      password: "{{ env_var('SNOWFLAKE_PASSWORD') }}"
+      role: "{{ env_var('SNOWFLAKE_ROLE', 'TRANSFORMER') }}"
+      database: "{{ env_var('SNOWFLAKE_DATABASE', 'WALMART_DB') }}"
+      warehouse: "{{ env_var('SNOWFLAKE_WAREHOUSE', 'WALMART_WH') }}"
+      schema: raw
+      threads: 8
+      client_session_keep_alive: False

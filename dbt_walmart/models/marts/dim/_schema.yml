@@ -1,0 +1,249 @@
+version: 2
+
+models:
+  - name: dim_customer
+    description: >
+      Customer dimension table implementing SCD Type 2. 
+      Historical changes to customer attributes are tracked with versioning.
+      Each change creates a new record with valid_from/valid_to dates.
+    columns:
+      - name: customer_key
+        description: Surrogate key for the customer dimension (unique per version)
+        tests:
+          - unique
+          - not_null
+      - name: customer_id
+        description: Natural/business key for the customer
+        tests:
+          - not_null
+      - name: first_name
+        description: Customer first name
+      - name: last_name
+        description: Customer last name
+      - name: email
+        description: Customer email address
+      - name: phone
+        description: Customer phone number
+      - name: address
+        description: Customer street address
+      - name: city
+        description: Customer city
+      - name: state
+        description: Customer state
+      - name: zip_code
+        description: Customer ZIP code
+      - name: country
+        description: Customer country
+      - name: row_hash
+        description: Hash of tracked columns for change detection
+      - name: valid_from
+        description: Start date of record validity
+        tests:
+          - not_null
+      - name: valid_to
+        description: End date of record validity
+        tests:
+          - not_null
+      - name: is_current
+        description: Flag indicating if this is the current version
+        tests:
+          - not_null
+      - name: created_at
+        description: Record creation timestamp
+      - name: updated_at
+        description: Record update timestamp
+
+  - name: dim_product
+    description: >
+      Product dimension table implementing SCD Type 2.
+      Historical changes to product attributes (including pricing) are tracked.
+      This allows for accurate historical reporting of product information.
+    columns:
+      - name: product_key
+        description: Surrogate key for the product dimension (unique per version)
+        tests:
+          - unique
+          - not_null
+      - name: product_id
+        description: Natural/business key for the product
+        tests:
+          - not_null
+      - name: product_name
+        description: Product name
+      - name: description
+        description: Product description
+      - name: category
+        description: Product category
+      - name: subcategory
+        description: Product subcategory
+      - name: brand
+        description: Product brand
+      - name: unit_price
+        description: Product unit price
+      - name: cost
+        description: Product cost
+      - name: supplier_id
+        description: Foreign key to supplier
+      - name: is_active
+        description: Whether product is active
+      - name: row_hash
+        description: Hash of tracked columns for change detection
+      - name: valid_from
+        description: Start date of record validity
+        tests:
+          - not_null
+      - name: valid_to
+        description: End date of record validity
+        tests:
+          - not_null
+      - name: is_current
+        description: Flag indicating if this is the current version
+        tests:
+          - not_null
+      - name: created_at
+        description: Record creation timestamp
+      - name: updated_at
+        description: Record update timestamp
+
+  - name: dim_store
+    description: >
+      Store dimension table implementing SCD Type 1.
+      Changes to store attributes are overwritten (no history tracking).
+    columns:
+      - name: store_key
+        description: Surrogate key for the store dimension
+        tests:
+          - unique
+          - not_null
+      - name: store_id
+        description: Natural/business key for the store
+        tests:
+          - unique
+          - not_null
+      - name: store_name
+        description: Store name
+      - name: store_type
+        description: Store type (e.g., Supercenter, Neighborhood Market)
+      - name: address
+        description: Store street address
+      - name: city
+        description: Store city
+      - name: state
+        description: Store state
+      - name: zip_code
+        description: Store ZIP code
+      - name: country
+        description: Store country
+      - name: region
+        description: Store region
+      - name: district
+        description: Store district
+      - name: manager_name
+        description: Store manager name
+      - name: open_date
+        description: Store opening date
+      - name: square_footage
+        description: Store size in square feet
+      - name: is_active
+        description: Whether store is active
+      - name: created_at
+        description: Record creation timestamp
+      - name: updated_at
+        description: Record update timestamp
+
+  - name: dim_supplier
+    description: >
+      Supplier dimension table implementing SCD Type 1.
+      Changes to supplier attributes are overwritten (no history tracking).
+    columns:
+      - name: supplier_key
+        description: Surrogate key for the supplier dimension
+        tests:
+          - unique
+          - not_null
+      - name: supplier_id
+        description: Natural/business key for the supplier
+        tests:
+          - unique
+          - not_null
+      - name: supplier_name
+        description: Supplier name
+      - name: contact_name
+        description: Supplier contact name
+      - name: contact_email
+        description: Supplier contact email
+      - name: contact_phone
+        description: Supplier contact phone
+      - name: address
+        description: Supplier address
+      - name: city
+        description: Supplier city
+      - name: state
+        description: Supplier state
+      - name: country
+        description: Supplier country
+      - name: is_active
+        description: Whether supplier is active
+      - name: created_at
+        description: Record creation timestamp
+      - name: updated_at
+        description: Record update timestamp
+
+  - name: dim_date
+    description: >
+      Date dimension table containing various date attributes for reporting.
+      This is a conformed dimension used across all fact tables.
+    columns:
+      - name: date_key
+        description: Primary key (the date itself)
+        tests:
+          - unique
+          - not_null
+      - name: full_date
+        description: Full date value
+      - name: year
+        description: Year number
+      - name: quarter
+        description: Quarter number (1-4)
+      - name: month
+        description: Month number (1-12)
+      - name: week_of_year
+        description: Week number of the year
+      - name: day_of_week
+        description: Day of week (0-6, where 0 is Sunday)
+      - name: day_of_year
+        description: Day of year (1-366)
+      - name: day_of_month
+        description: Day of month (1-31)
+      - name: year_name
+        description: Year as string
+      - name: year_month
+        description: Year-Month string (YYYY-MM)
+      - name: month_name_short
+        description: Short month name (Jan, Feb, etc.)
+      - name: month_name_long
+        description: Full month name
+      - name: day_name_short
+        description: Short day name (Mon, Tue, etc.)
+      - name: day_name_long
+        description: Full day name
+      - name: fiscal_year
+        description: Fiscal year number
+      - name: fiscal_month
+        description: Fiscal month number
+      - name: quarter_name
+        description: Quarter name (Q1, Q2, etc.)
+      - name: year_quarter
+        description: Year-Quarter string (YYYY-Q#)
+      - name: is_weekend
+        description: Whether the day is a weekend
+      - name: is_weekday
+        description: Whether the day is a weekday
+      - name: is_month_start
+        description: Whether the day is the first day of the month
+      - name: is_month_end
+        description: Whether the day is the last day of the month
+      - name: is_year_start
+        description: Whether the day is the first day of the year
+      - name: is_year_end
+        description: Whether the day is the last day of the year
