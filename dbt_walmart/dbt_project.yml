@@ -1,0 +1,42 @@
+name: 'dbt_walmart'
+version: '1.0.0'
+config-version: 2
+
+# This setting configures which "profile" dbt uses for this project.
+profile: 'dbt_walmart'
+
+# These configurations specify where dbt should look for different types of files.
+model-paths: ["models"]
+analysis-paths: ["analysis"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+# Configuring models
+models:
+  dbt_walmart:
+    # Config indicated by + and target all paths under models/staging/
+    staging:
+      +materialized: view
+      +schema: staging
+    intermediate:
+      +materialized: ephemeral
+    marts:
+      dim:
+        +materialized: table
+        +schema: dim
+      fact:
+        +materialized: incremental
+        +schema: fact
+
+# Variables for SCD configurations
+vars:
+  # Date to use for incremental runs
+  start_date: '2020-01-01'
+  # SCD2 valid_to default date for current records
+  scd2_valid_to_default: '9999-12-31'

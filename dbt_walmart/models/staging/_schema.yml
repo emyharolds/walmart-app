@@ -1,0 +1,56 @@
+version: 2
+
+models:
+  - name: stg_customers
+    description: Staged customer data with cleaned and standardized fields
+    columns:
+      - name: customer_id
+        description: Primary key for customer
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_products
+    description: Staged product data with cleaned and standardized fields
+    columns:
+      - name: product_id
+        description: Primary key for product
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_stores
+    description: Staged store data with cleaned and standardized fields
+    columns:
+      - name: store_id
+        description: Primary key for store
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_orders
+    description: Staged order data with cleaned and standardized fields
+    columns:
+      - name: order_id
+        description: Primary key for order
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_order_items
+    description: Staged order item data with cleaned and standardized fields
+    columns:
+      - name: order_item_id
+        description: Primary key for order item
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_suppliers
+    description: Staged supplier data with cleaned and standardized fields
+    columns:
+      - name: supplier_id
+        description: Primary key for supplier
+        tests:
+          - unique
+          - not_null
