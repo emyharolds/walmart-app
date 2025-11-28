@@ -89,7 +89,7 @@ select
     {% endfor %}
     s.{{ unique_key }},
     current_timestamp() as valid_from,
-    '{{ var("scd2_valid_to_default") }}'::timestamp as valid_to,
+    cast('{{ var("scd2_valid_to_default") }}' as timestamp) as valid_to,
     true as is_current,
     current_timestamp() as created_at,
     current_timestamp() as updated_at
@@ -106,7 +106,7 @@ select
     {% endfor %}
     {{ unique_key }},
     current_timestamp() as valid_from,
-    '{{ var("scd2_valid_to_default") }}'::timestamp as valid_to,
+    cast('{{ var("scd2_valid_to_default") }}' as timestamp) as valid_to,
     true as is_current,
     current_timestamp() as created_at,
     current_timestamp() as updated_at

@@ -28,7 +28,7 @@ models:
       +materialized: ephemeral
     marts:
       dim:
-        +materialized: table
+        +materialized: incremental
         +schema: dim
       fact:
         +materialized: incremental
