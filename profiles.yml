@@ -6,24 +6,24 @@ dbt_walmart:
   outputs:
     dev:
       type: snowflake
-      account: "{{ env_var('SNOWFLAKE_ACCOUNT') }}"
-      user: "{{ env_var('SNOWFLAKE_USER') }}"
-      password: "{{ env_var('SNOWFLAKE_PASSWORD') }}"
-      role: "{{ env_var('SNOWFLAKE_ROLE', 'ETL') }}"
-      database: "{{ env_var('SNOWFLAKE_DATABASE', 'WALM_DATA') }}"
-      warehouse: "{{ env_var('SNOWFLAKE_WAREHOUSE', 'ETL') }}"
+      account: "{{ env_var('DBT_SNOWFLAKE_ACCOUNT') }}"
+      user: "{{ env_var('DBT_SNOWFLAKE_USER') }}"
+      password: "{{ env_var('DBT_SNOWFLAKE_PASSWORD') }}"
+      role: "{{ env_var('DBT_SNOWFLAKE_ROLE', 'ETL') }}"
+      database: "{{ env_var('DBT_SNOWFLAKE_DATABASE', 'WALM_DATA') }}"
+      warehouse: "{{ env_var('DBT_SNOWFLAKE_WAREHOUSE', 'ETL') }}"
       schema: mart
       threads: 4
       client_session_keep_alive: False
 
     prod:
       type: snowflake
-      account: "{{ env_var('SNOWFLAKE_ACCOUNT') }}"
-      user: "{{ env_var('SNOWFLAKE_USER') }}"
-      password: "{{ env_var('SNOWFLAKE_PASSWORD') }}"
-      role: "{{ env_var('SNOWFLAKE_ROLE', 'ETL') }}"
-      database: "{{ env_var('SNOWFLAKE_DATABASE', 'WALM_DATA') }}"
-      warehouse: "{{ env_var('SNOWFLAKE_WAREHOUSE', 'ETL') }}"
+      account: "{{ env_var('DBT_SNOWFLAKE_ACCOUNT') }}"
+      user: "{{ env_var('DBT_SNOWFLAKE_USER') }}"
+      password: "{{ env_var('DBT_SNOWFLAKE_PASSWORD') }}"
+      role: "{{ env_var('DBT_SNOWFLAKE_ROLE', 'ETL') }}"
+      database: "{{ env_var('DBT_SNOWFLAKE_DATABASE', 'WALM_DATA') }}"
+      warehouse: "{{ env_var('DBT_SNOWFLAKE_WAREHOUSE', 'ETL') }}"
       schema: mart
       threads: 8
       client_session_keep_alive: False
