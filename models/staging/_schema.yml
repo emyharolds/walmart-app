@@ -2,7 +2,7 @@ version: 2
 
 models:
   - name: stg_department
-    description: Staging table for Walmart department data
+    description: Staging table for Walmart department weekly sales data
     columns:
       - name: STORE
         description: Store identifier
@@ -12,6 +12,14 @@ models:
         description: Department identifier
         tests:
           - not_null
+      - name: DATE
+        description: Week end date
+        tests:
+          - not_null
+      - name: WEEKLY_SALES
+        description: Weekly sales amount
+      - name: ISHOLIDAY
+        description: Holiday flag
 
   - name: stg_stores
     description: Staging table for Walmart store characteristics
@@ -27,25 +35,33 @@ models:
         description: Store size in square feet
 
   - name: stg_fact
-    description: Staging table for Walmart weekly sales facts
+    description: Staging table for Walmart store economic and environmental metrics
     columns:
       - name: STORE
         description: Store identifier
         tests:
           - not_null
-      - name: STORE_DATE
+      - name: DATE
         description: Week end date
         tests:
           - not_null
-      - name: WEEKLY_SALES
-        description: Weekly sales amount
-      - name: ISHOLIDAY
-        description: Holiday flag
       - name: TEMPERATURE
         description: Average temperature
       - name: FUEL_PRICE
         description: Fuel price in the region
+      - name: MARKDOWN1
+        description: Anonymized markdown data
+      - name: MARKDOWN2
+        description: Anonymized markdown data
+      - name: MARKDOWN3
+        description: Anonymized markdown data
+      - name: MARKDOWN4
+        description: Anonymized markdown data
+      - name: MARKDOWN5
+        description: Anonymized markdown data
       - name: CPI
         description: Consumer Price Index
       - name: UNEMPLOYMENT
         description: Unemployment rate
+      - name: ISHOLIDAY
+        description: Holiday flag

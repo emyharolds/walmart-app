@@ -11,9 +11,7 @@ with source as (
 cleaned as (
     select
         store as STORE,
-        date as STORE_DATE,
-        weekly_sales as WEEKLY_SALES,
-        isholiday as ISHOLIDAY,
+        date as DATE,
         temperature as TEMPERATURE,
         fuel_price as FUEL_PRICE,
         markdown1 as MARKDOWN1,
@@ -22,7 +20,8 @@ cleaned as (
         markdown4 as MARKDOWN4,
         markdown5 as MARKDOWN5,
         cpi as CPI,
-        unemployment as UNEMPLOYMENT
+        unemployment as UNEMPLOYMENT,
+        isholiday as ISHOLIDAY
     from source
 )
 

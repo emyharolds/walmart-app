@@ -1,7 +1,7 @@
 {{
     config(
         materialized='incremental',
-        unique_key=['STORE_ID', 'STORE_DATE'],
+        unique_key=['STORE', 'DEPT', 'DATE'],
         incremental_strategy='merge'
     )
 }}
@@ -9,11 +9,15 @@
 {#
     Fact Table: fact_walmart_sales
     
-    Weekly sales facts for Walmart stores
-    including various metrics and indicators.
+    Weekly sales facts for Walmart stores by department
+    including various economic and store metrics.
 #}
 
-with fact_data as (
+with sales_data as (
+    select * from {{ ref('stg_department') }}
+),
+
+fact_data as (
     select * from {{ ref('stg_fact') }}
 ),
 
@@ -23,11 +27,12 @@ date_dim as (
 
 joined as (
     select
-        f.STORE as STORE_ID,
-        f.STORE_DATE,
+        s.STORE,
+        s.DEPT,
+        s.DATE,
         d.DATE_KEY,
-        f.WEEKLY_SALES,
-        f.ISHOLIDAY,
+        s.WEEKLY_SALES,
+        s.ISHOLIDAY,
         f.TEMPERATURE,
         f.FUEL_PRICE,
         f.MARKDOWN1,
@@ -37,17 +42,22 @@ joined as (
         f.MARKDOWN5,
         f.CPI,
         f.UNEMPLOYMENT
-    from fact_data f
-    left join date_dim d on f.STORE_DATE = d.FULL_DATE
+    from sales_data s
+    left join fact_data f 
+        on s.STORE = f.STORE 
+        and s.DATE = f.DATE
+    left join date_dim d 
+        on s.DATE = d.FULL_DATE
     
     {% if is_incremental() %}
-    where f.STORE_DATE > (select coalesce(max(STORE_DATE), '1900-01-01') from {{ this }})
+    where s.DATE > (select coalesce(max(DATE), '1900-01-01') from {{ this }})
     {% endif %}
 )
 
 select
-    STORE_ID,
-    STORE_DATE,
+    STORE,
+    DEPT,
+    DATE,
     DATE_KEY,
     WEEKLY_SALES,
     ISHOLIDAY,

@@ -2,12 +2,12 @@ version: 2
 
 sources:
   - name: raw
-    description: Raw Walmart data loaded from S3 via Snowflake COPY/PIPE
+    description: Raw Walmart data loaded from CSV files
     database: "{{ env_var('DBT_SNOWFLAKE_DATABASE', 'WALM_DATA') }}"
     schema: raw
     tables:
       - name: department
-        description: Department information for each store
+        description: Weekly sales by store and department
         columns:
           - name: store
             description: Store identifier
@@ -17,9 +17,17 @@ sources:
             description: Department identifier
             tests:
               - not_null
+          - name: date
+            description: Week end date
+            tests:
+              - not_null
+          - name: weekly_sales
+            description: Weekly sales amount
+          - name: isholiday
+            description: Holiday flag
 
       - name: stores
-        description: Store characteristics and attributes
+        description: Store characteristics
         columns:
           - name: store
             description: Store identifier
@@ -32,7 +40,7 @@ sources:
             description: Store size in square feet
 
       - name: fact
-        description: Weekly sales facts for each store and department
+        description: Additional store metrics by week
         columns:
           - name: store
             description: Store identifier
@@ -42,10 +50,6 @@ sources:
             description: Week end date
             tests:
               - not_null
-          - name: weekly_sales
-            description: Weekly sales amount
-          - name: isholiday
-            description: Holiday flag (TRUE/FALSE)
           - name: temperature
             description: Average temperature
           - name: fuel_price
@@ -64,3 +68,5 @@ sources:
             description: Consumer Price Index
           - name: unemployment
             description: Unemployment rate
+          - name: isholiday
+            description: Holiday flag

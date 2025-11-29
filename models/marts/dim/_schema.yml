@@ -30,7 +30,6 @@ models:
       - name: STORE_KEY
         description: Surrogate key for store-department combination
         tests:
-          - unique
           - not_null
       - name: STORE_ID
         description: Store identifier

@@ -11,7 +11,10 @@ with source as (
 cleaned as (
     select
         store as STORE,
-        dept as DEPT
+        dept as DEPT,
+        date as DATE,
+        weekly_sales as WEEKLY_SALES,
+        isholiday as ISHOLIDAY
     from source
 )
 
