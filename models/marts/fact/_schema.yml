@@ -4,8 +4,16 @@ models:
   - name: fact_walmart_sales
     description: Fact table for Walmart weekly sales with all metrics
     columns:
-      - name: STORE_ID
+      - name: STORE
         description: Store identifier
+        tests:
+          - not_null
+      - name: DEPT
+        description: Department identifier
+        tests:
+          - not_null
+      - name: DATE
+        description: Week end date
         tests:
           - not_null
       - name: DATE_KEY
@@ -14,10 +22,6 @@ models:
           - relationships:
               to: ref('dim_date')
               field: DATE_KEY
-      - name: STORE_DATE
-        description: Week end date
-        tests:
-          - not_null
       - name: WEEKLY_SALES
         description: Weekly sales amount
       - name: ISHOLIDAY

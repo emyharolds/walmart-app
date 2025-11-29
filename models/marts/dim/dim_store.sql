@@ -20,7 +20,7 @@ with stores as (
 ),
 
 departments as (
-    select * from {{ ref('stg_department') }}
+    select distinct STORE, DEPT from {{ ref('stg_department') }}
 ),
 
 combined as (
